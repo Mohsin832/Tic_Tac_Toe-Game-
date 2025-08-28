@@ -14,13 +14,19 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
-      body: Center(
-        child: Uihelper.customText(
-          text: "Tic-Tac-Toe Game",
-          fontsize: 15,
-          context: context,
-          fontfamily: "Regular",
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Uihelper.customText(
+              text: "Score board",
+              fontsize: 18,
+              context: context,
+              fontWeight: FontWeight.normal,
+              fontfamily: "Regular",
+              letterSpacing: 3,
+            ),
+          ),
+        ],
       ),
     );
   }

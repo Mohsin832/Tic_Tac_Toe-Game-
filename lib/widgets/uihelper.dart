@@ -8,6 +8,7 @@ class Uihelper {
     String? fontfamily,
     FontWeight? fontWeight,
     Color? color,
+    double? letterSpacing,
   }) {
     return Text(
       text,
@@ -16,6 +17,7 @@ class Uihelper {
         fontFamily: fontfamily ?? "Regular",
         fontWeight: fontWeight ?? FontWeight.normal,
         color: color ?? Colors.white,
+        letterSpacing: letterSpacing ?? 1,
       ),
     );
   }
