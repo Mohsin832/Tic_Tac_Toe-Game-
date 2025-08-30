@@ -14,7 +14,7 @@ class _GameState extends State<Game> {
   String currentIndex = "X";
   bool isZero = true;
 
-  void displayXo(index) {
+  void displayXo(int index) {
     if (grid[index] == "") {
       setState(() {
         grid[index] = currentIndex;
@@ -24,6 +24,10 @@ class _GameState extends State<Game> {
 
     isZero = !isZero;
   }
+
+  // // String checkWinner(List<String> grid) {
+  // //   List<List<int>> winningCombination = [[0,1,2],[3,4,5],[6,7,8],[],[],[],[],[]];
+  // }
 
   @override
   Widget build(BuildContext context) {
