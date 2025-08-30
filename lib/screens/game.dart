@@ -64,12 +64,15 @@ class _GameState extends State<Game> {
                         color: AppColor.secondaryColor,
                       ),
                       child: Center(
-                        child: Uihelper.customText(
-                          text: displayXO[index],
-                          fontsize: 80,
-                          context: context,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.primaryColor,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Uihelper.customText(
+                            text: displayXO[index],
+                            fontsize: 80,
+                            context: context,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.primaryColor,
+                          ),
                         ),
                       ),
                     ),
@@ -77,6 +80,7 @@ class _GameState extends State<Game> {
                 },
               ),
             ),
+
             Expanded(
               flex: 2,
               child: Uihelper.customText(
