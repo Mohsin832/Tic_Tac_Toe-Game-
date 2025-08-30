@@ -13,11 +13,15 @@ class _GameState extends State<Game> {
   List<String> grid = ["", "", "", "", "", "", "", "", ""];
   String currentIndex = "X";
   bool isZero = true;
+
   void displayXo(index) {
-    setState(() {
-      grid[index] = currentIndex;
-      currentIndex = isZero ? "O" : "X";
-    });
+    if (grid[index] == "") {
+      setState(() {
+        grid[index] = currentIndex;
+        currentIndex = isZero ? "O" : "X";
+      });
+    }
+
     isZero = !isZero;
   }
 
