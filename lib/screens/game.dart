@@ -10,19 +10,17 @@ class Game extends StatefulWidget {
 }
 
 class _GameState extends State<Game> {
-  void tapped(int index) {
+  List<String> grid = ["", "", "", "", "", "", "", "", ""];
+  String currentIndex = "X";
+  bool isZero = true;
+  void displayXo(index) {
     setState(() {
-      if (oTurn == true && displayXO[index] == "") {
-        displayXO[index] = "O";
-      } else {
-        displayXO[index] = "X";
-      }
-      oTurn = !oTurn;
+      grid[index] = currentIndex;
+      currentIndex = isZero ? "O" : "X";
     });
+    isZero = !isZero;
   }
 
-  bool oTurn = true;
-  List<String> displayXO = ["", "", "", "", "", "", "", "", ""];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,14 +43,15 @@ class _GameState extends State<Game> {
             Expanded(
               flex: 3,
               child: GridView.builder(
+                shrinkWrap: true,
                 itemCount: 9,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                 ),
                 itemBuilder: (context, index) {
-                  return GestureDetector(
+                  return InkWell(
                     onTap: () {
-                      tapped(index);
+                      displayXo(index);
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -67,7 +66,7 @@ class _GameState extends State<Game> {
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Uihelper.customText(
-                            text: displayXO[index],
+                            text: grid[index],
                             fontsize: 80,
                             context: context,
                             fontWeight: FontWeight.bold,

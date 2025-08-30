@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Uihelper {
-  static customText({
+  static Text customText({
     required String text,
     required double fontsize,
     required BuildContext context,
