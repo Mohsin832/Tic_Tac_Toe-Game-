@@ -19,10 +19,9 @@ class _GameState extends State<Game> {
       setState(() {
         grid[index] = currentIndex;
         currentIndex = isZero ? "O" : "X";
+        isZero = !isZero;
       });
     }
-
-    isZero = !isZero;
   }
 
   // // String checkWinner(List<String> grid) {
@@ -58,6 +57,8 @@ class _GameState extends State<Game> {
                 ),
                 itemBuilder: (context, index) {
                   return InkWell(
+                    splashColor: Colors.blue,
+                    focusColor: Colors.blue,
                     onTap: () {
                       displayXo(index);
                     },
