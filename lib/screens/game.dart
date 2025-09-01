@@ -24,9 +24,26 @@ class _GameState extends State<Game> {
     }
   }
 
-  // // String checkWinner(List<String> grid) {
-  // //   List<List<int>> winningCombination = [[0,1,2],[3,4,5],[6,7,8],[],[],[],[],[]];
-  // }
+  bool checkMove(int i1, int i2, int i3, String sign) {
+    if (grid[i1] == sign && grid[i2] == sign && grid[i3] == sign) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void findWinner(String currentSign) {
+    if (checkMove(0, 1, 2, currentSign) ||
+        checkMove(3, 4, 5, currentSign) ||
+        checkMove(6, 7, 8, currentSign) ||
+        checkMove(0, 3, 6, currentSign) ||
+        checkMove(1, 4, 7, currentSign) ||
+        checkMove(2, 5, 8, currentSign) ||
+        checkMove(0, 4, 8, currentSign) ||
+        checkMove(2, 4, 6, currentSign)) {
+      print("$currentSign Won");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
