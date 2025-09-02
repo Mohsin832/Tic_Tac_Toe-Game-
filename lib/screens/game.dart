@@ -63,6 +63,8 @@ class _GameState extends State<Game> {
       // counterWinner() {
 
       // }
+    } else if (!grid.contains("")) {
+      winner = 'tie';
     }
   }
 
@@ -97,14 +99,13 @@ class _GameState extends State<Game> {
                         context: context,
                       ),
                       Uihelper.customText(
-                        text: oCounter.toString(),
+                        text: xCounter.toString(),
                         fontsize: 40,
                         context: context,
                       ),
                     ],
                   ),
                   Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Uihelper.customText(
@@ -167,16 +168,14 @@ class _GameState extends State<Game> {
               if (winner != "")
                 ElevatedButton(
                   onPressed: () {
-                    if (winner == "X") {
-                      setState(() {
+                    setState(() {
+                      if (winner == "X") {
                         xCounter++;
-                      });
-                    } else {
-                      setState(() {
+                      } else if (winner == "O") {
                         oCounter++;
-                      });
-                    }
-                    grid = ["", "", "", "", "", "", "", "", ""];
+                      }
+                    });
+                    grid = List.filled(9, "");
                     currentIndex = "X";
                     isZero = true;
                     winner = "";
