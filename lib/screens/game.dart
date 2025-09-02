@@ -55,7 +55,7 @@ class _GameState extends State<Game> {
         checkMove(1, 4, 7, currentSign) ||
         checkMove(2, 5, 8, currentSign) ||
         checkMove(0, 4, 8, currentSign) ||
-        checkMove(2, 4, 6, currentSign)) {
+        checkMove(2, 4, 6, currentSign)) {  
       setState(() {
         winner = currentSign;
       });
