@@ -13,13 +13,19 @@ class _GameState extends State<Game> {
   List<String> grid = ["", "", "", "", "", "", "", "", ""];
   String currentIndex = "X";
   bool isZero = true;
+  String winner = "";
+  int xCounter = 0;
+  int oCounter = 0;
 
   void displayXo(int index) {
+    if (winner != "") return;
+
     if (grid[index] == "") {
       setState(() {
         grid[index] = currentIndex;
         currentIndex = isZero ? "O" : "X";
         isZero = !isZero;
+        findWinner(grid[index]);
       });
     }
   }
@@ -32,6 +38,15 @@ class _GameState extends State<Game> {
     }
   }
 
+  void resetGame() {
+    setState(() {
+      grid = ["", "", "", "", "", "", "", "", ""];
+      currentIndex = "X";
+      isZero = true;
+      winner = "";
+    });
+  }
+
   void findWinner(String currentSign) {
     if (checkMove(0, 1, 2, currentSign) ||
         checkMove(3, 4, 5, currentSign) ||
@@ -41,83 +56,139 @@ class _GameState extends State<Game> {
         checkMove(2, 5, 8, currentSign) ||
         checkMove(0, 4, 8, currentSign) ||
         checkMove(2, 4, 6, currentSign)) {
-      print("$currentSign Won");
+      setState(() {
+        winner = currentSign;
+      });
+
+      // counterWinner() {
+
+      // }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.primaryColor,
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Uihelper.customText(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColor.primaryColor,
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Uihelper.customText(
                 text: "Score board",
-                fontsize: 18,
+                fontsize: 30,
                 context: context,
                 fontWeight: FontWeight.normal,
                 fontfamily: "Regular",
                 letterSpacing: 3,
               ),
-            ),
-            Expanded(
-              flex: 3,
-              child: GridView.builder(
-                shrinkWrap: true,
-                itemCount: 9,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                ),
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    splashColor: Colors.blue,
-                    focusColor: Colors.blue,
-                    onTap: () {
-                      displayXo(index);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                          width: 5,
-                          color: AppColor.primaryColor,
-                        ),
-                        color: AppColor.secondaryColor,
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Uihelper.customText(
+                        text: "score of X ",
+                        fontsize: 18,
+                        context: context,
                       ),
-                      child: Center(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Uihelper.customText(
-                            text: grid[index],
-                            fontsize: 80,
-                            context: context,
-                            fontWeight: FontWeight.bold,
+                      Uihelper.customText(
+                        text: oCounter.toString(),
+                        fontsize: 40,
+                        context: context,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Uihelper.customText(
+                        text: "score of 0 ",
+                        fontsize: 18,
+                        context: context,
+                      ),
+                      Uihelper.customText(
+                        text: oCounter.toString(),
+                        fontsize: 40,
+                        context: context,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 20),
+              Expanded(
+                flex: 3,
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: 9,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                  ),
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      splashColor: Colors.blue,
+                      focusColor: Colors.blue,
+                      onTap: () {
+                        displayXo(index);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            width: 5,
                             color: AppColor.primaryColor,
+                          ),
+                          color: AppColor.secondaryColor,
+                        ),
+                        child: Center(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Uihelper.customText(
+                              text: grid[index],
+                              fontsize: 80,
+                              context: context,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.primaryColor,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-
-            Expanded(
-              flex: 2,
-              child: Uihelper.customText(
-                text: "Timer",
-                fontsize: 18,
-                context: context,
-                fontWeight: FontWeight.normal,
-                fontfamily: "Regular",
-                letterSpacing: 3,
-              ),
-            ),
-          ],
+              if (winner != "")
+                FloatingActionButton(
+                  onPressed: () {
+                    if (winner == "X") {
+                      setState(() {
+                        xCounter++;
+                      });
+                    } else {
+                      setState(() {
+                        oCounter++;
+                      });
+                    }
+                    grid = ["", "", "", "", "", "", "", "", ""];
+                    currentIndex = "X";
+                    isZero = true;
+                    winner = "";
+                  },
+                  child: Uihelper.customText(
+                    text: "Reset the game",
+                    fontsize: 18,
+                    context: context,
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
