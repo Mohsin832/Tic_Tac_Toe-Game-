@@ -165,7 +165,7 @@ class _GameState extends State<Game> {
                 ),
               ),
               if (winner != "")
-                FloatingActionButton(
+                ElevatedButton(
                   onPressed: () {
                     if (winner == "X") {
                       setState(() {
@@ -181,6 +181,12 @@ class _GameState extends State<Game> {
                     isZero = true;
                     winner = "";
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColor.accentColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(20),
+                    ),
+                  ),
                   child: Uihelper.customText(
                     text: "Reset the game",
                     fontsize: 18,
